@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GameDev Блокнот PRO</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="header-main">
+                <h1><i class="fas fa-gamepad"></i> GameDev Блокнот PRO</h1>
+                <p class="subtitle">Планирование, документирование и организация игровых проектов</p>
+            </div>
+            
+            <div class="quick-stats">
+                <div class="stat">
+                    <span class="stat-number" id="totalNotes">0</span>
+                    <span class="stat-label">Всего записей</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number" id="highPriority">0</span>
+                    <span class="stat-label">Высокий приоритет</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number" id="ideasCount">0</span>
+                    <span class="stat-label">Идей</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number" id="mechanicsCount">0</span>
+                    <span class="stat-label">Механик</span>
+                </div>
+            </div>
+        </header>
+
+        <div class="main-controls">
+            <div class="search-container">
+                <i class="fas fa-search"></i>
+                <input type="text" id="searchInput" placeholder="Поиск по заметкам, тегам...">
+                <button id="clearSearch" class="icon-btn" title="Очистить поиск">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="filter-controls">
+                <select id="filterType" class="filter-select">
+                    <option value="all">Все типы</option>
+                    <option value="idea">Идеи</option>
+                    <option value="mechanic">Механики</option>
+                </select>
+                
+                <select id="filterPriority" class="filter-select">
+                    <option value="all">Все приоритеты</option>
+                    <option value="high">Высокий</option>
+                    <option value="medium">Средний</option>
+                    <option value="low">Низкий</option>
+                </select>
+                
+                <select id="filterGenre" class="filter-select">
+                    <option value="all">Все жанры</option>
+                    <option value="rpg">RPG</option>
+                    <option value="shooter">Шутер</option>
+                    <option value="strategy">Стратегия</option>
+                    <option value="adventure">Приключение</option>
+                    <option value="simulator">Симулятор</option>
+                    <option value="puzzle">Головоломка</option>
+                    <option value="platformer">Платформер</option>
+                    <option value="horror">Хоррор</option>
+                </select>
+                
+                <div class="tag-filter">
+                    <input type="text" id="tagFilter" placeholder="Фильтр по тегам...">
+                    <div id="activeTags"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="action-buttons">
+            <div class="button-group">
+                <button id="newIdea" class="btn-primary">
+                    <i class="fas fa-lightbulb"></i> Новая идея
+                </button>
+                <button id="newMechanic" class="btn-secondary">
+                    <i class="fas fa-cogs"></i> Новая механика
+                </button>
+                <button id="newTemplate" class="btn-success">
+                    <i class="fas fa-file-alt"></i> Из шаблона
+                </button>
+            </div>
+            
+            <div class="button-group">
+                <button id="saveAll" class="btn-success">
+                    <i class="fas fa-save"></i> Сохранить всё
+                </button>
+                <button id="exportBtn" class="btn-info">
+                    <i class="fas fa-download"></i> Экспорт
+                </button>
+                <button id="importBtn" class="btn-warning">
+                    <i class="fas fa-upload"></i> Импорт
+                </button>
+                <button id="githubSync" class="btn-dark">
+                    <i class="fab fa-github"></i> GitHub
+                </button>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <aside class="sidebar">
+                <div class="sidebar-section">
+                    <h3><i class="fas fa-filter"></i> Быстрые фильтры</h3>
+                    <div class="quick-filters">
+                        <button class="quick-filter" data-filter="priority:high">
+                            <i class="fas fa-exclamation-circle"></i> Высокий приоритет
+                        </button>
+                        <button class="quick-filter" data-filter="type:mechanic">
+                            <i class="fas fa-cogs"></i> Все механики
+                        </button>
+                        <button class="quick-filter" data-filter="type:idea">
+                            <i class="fas fa-lightbulb"></i> Все идеи
+                        </button>
+                        <button class="quick-filter" data-filter="status:todo">
+                            <i class="fas fa-clock"></i> В ожидании
+                        </button>
+                        <button class="quick-filter" data-filter="status:inprogress">
+                            <i class="fas fa-spinner"></i> В разработке
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="sidebar-section">
+                    <h3><i class="fas fa-tags"></i> Популярные теги</h3>
+                    <div class="popular-tags" id="popularTags">
+                        <!-- Теги будут загружены динамически -->
+                    </div>
+                </div>
+                
+                <div class="sidebar-section">
+                    <h3><i class="fas fa-calendar-alt"></i> Календарь</h3>
+                    <div class="mini-calendar">
+                        <div class="calendar-header">
+                            <button id="prevMonth"><i class="fas fa-chevron-left"></i></button>
+                            <span id="currentMonth">Декабрь 2024</span>
+                            <button id="nextMonth"><i class="fas fa-chevron-right"></i></button>
+                        </div>
+                        <div class="calendar-grid" id="calendarGrid">
+                            <!-- Календарь будет сгенерирован динамически -->
+                        </div>
+                        <div class="calendar-notes" id="calendarNotes">
+                            <p>Заметок на выбранную дату: <span id="notesCount">0</span></p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="sidebar-section">
+                    <h3><i class="fas fa-chart-line"></i> Статистика</h3>
+                    <div class="stats-chart">
+                        <canvas id="statsChart" width="300" height="200"></canvas>
+                    </div>
+                </div>
+            </aside>
+
+            <main class="content-area">
+                <div class="tabs">
+                    <button class="tab active" data-tab="ideas">
+                        <i class="fas fa-lightbulb"></i> Идеи игр
+                        <span class="tab-badge" id="ideasBadge">0</span>
+                    </button>
+                    <button class="tab" data-tab="mechanics">
+                        <i class="fas fa-cogs"></i> Механики
+                        <span class="tab-badge" id="mechanicsBadge">0</span>
+                    </button>
+                    <button class="tab" data-tab="timeline">
+                        <i class="fas fa-road"></i> Таймлайн
+                        <span class="tab-badge" id="timelineBadge">0</span>
+                    </button>
+                    <button class="tab" data-tab="connections">
+                        <i class="fas fa-project-diagram"></i> Связи
+                        <span class="tab-badge" id="connectionsBadge">0</span>
+                    </button>
+                </div>
+                
+                <div class="tab-content active" id="ideasTab">
+                    <div class="section-header">
+                        <h2><i class="fas fa-lightbulb"></i> Идеи игр</h2>
+                        <div class="section-actions">
+                            <button class="btn-small" id="sortByRating">
+                                <i class="fas fa-star"></i> По рейтингу
+                            </button>
+                            <button class="btn-small" id="sortByDate">
+                                <i class="fas fa-calendar"></i> По дате
+                            </button>
+                        </div>
+                    </div>
+                    <div class="cards-container" id="ideasContainer"></div>
+                </div>
+                
+                <div class="tab-content" id="mechanicsTab">
+                    <div class="section-header">
+                        <h2><i class="fas fa-cogs"></i> Механики</h2>
+                        <div class="section-actions">
+                            <select id="mechanicCategory" class="filter-select">
+                                <option value="all">Все категории</option>
+                                <option value="combat">Боевые системы</option>
+                                <option value="economy">Экономика</option>
+                                <option value="dialogue">Диалоги</option>
+                                <option value="ai">Искусственный интеллект</option>
+                                <option value="progression">Прогрессия</option>
+                                <option value="multiplayer">Мультиплеер</option>
+                                <option value="ui">Пользовательский интерфейс</option>
+                                <option value="physics">Физика</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="cards-container" id="mechanicsContainer"></div>
+                </div>
+                
+                <div class="tab-content" id="timelineTab">
+                    <div class="timeline-view">
+                        <h2><i class="fas fa-road"></i> Таймлайн разработки</h2>
+                        <div class="timeline-controls">
+                            <button id="addMilestone" class="btn-primary">
+                                <i class="fas fa-flag"></i> Добавить веху
+                            </button>
+                            <button id="generateRoadmap" class="btn-success">
+                                <i class="fas fa-map"></i> Создать roadmap
+                            </button>
+                        </div>
+                        <div class="timeline-container" id="timelineContainer">
+                            <!-- Таймлайн будет сгенерирован динамически -->
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="tab-content" id="connectionsTab">
+                    <div class="connections-view">
+                        <h2><i class="fas fa-project-diagram"></i> Связи между идеями и механиками</h2>
+                        <div class="graph-container">
+                            <canvas id="connectionsGraph" width="800" height="600"></canvas>
+                        </div>
+                        <div class="connections-list" id="connectionsList">
+                            <!-- Список связей будет сгенерирован динамически -->
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Модальные окна -->
+    <div id="modal" class="modal">
+        <div class="modal-content large-modal">
+            <span class="close">&times;</span>
+            <h3 id="modalTitle">Новая запись</h3>
+            
+            <div class="modal-body">
+                <div class="form-row">
+                    <input type="text" id="noteTitle" placeholder="Название идеи/механики..." class="form-input">
+                    <select id="noteType" class="form-select">
+                        <option value="idea">Идея игры</option>
+                        <option value="mechanic">Механика</option>
+                    </select>
+                </div>
+                
+                <div class="form-row">
+                    <select id="noteGenre" class="form-select">
+                        <option value="">Выберите жанр</option>
+                        <option value="rpg">RPG</option>
+                        <option value="shooter">Шутер</option>
+                        <option value="strategy">Стратегия</option>
+                        <option value="adventure">Приключение</option>
+                        <option value="simulator">Симулятор</option>
+                        <option value="puzzle">Головоломка</option>
+                        <option value="platformer">Платформер</option>
+                        <option value="horror">Хоррор</option>
+                        <option value="mmo">MMO</option>
+                        <option value="roguelike">Roguelike</option>
+                    </select>
+                    
+                    <select id="noteStatus" class="form-select">
+                        <option value="todo">В ожидании</option>
+                        <option value="inprogress">В разработке</option>
+                        <option value="completed">Завершено</option>
+                        <option value="abandoned">Отложено</option>
+                    </select>
+                </div>
+                
+                <div class="form-row">
+                    <select id="notePriority" class="form-select">
+                        <option value="low">🔵 Низкий приоритет</option>
+                        <option value="medium">🟡 Средний приоритет</option>
+                        <option value="high">🔴 Высокий приоритет</option>
+                    </select>
+                    
+                    <div class="rating-input">
+                        <span>Оценка:</span>
+                        <div class="stars" id="ratingStars">
+                            <span class="star" data-rating="1">★</span>
+                            <span class="star" data-rating="2">★</span>
+                            <span class="star" data-rating="3">★</span>
+                            <span class="star" data-rating="4">★</span>
+                            <span class="star" data-rating="5">★</span>
+                        </div>
+                        <input type="hidden" id="noteRating" value="3">
+                    </div>
+                </div>
+                
+                <textarea id="noteContent" placeholder="Подробное описание..." class="form-textarea"></textarea>
+                
+                <div class="form-section">
+                    <label><i class="fas fa-tags"></i> Теги</label>
+                    <div class="tags-input">
+                        <input type="text" id="tagInput" placeholder="Добавить тег (нажмите Enter)">
+                        <div id="tagsContainer"></div>
+                    </div>
+                </div>
+                
+                <div class="form-section">
+                    <label><i class="fas fa-link"></i> Связанные записи</label>
+                    <div class="connections-input">
+                        <select id="connectionSelect" class="form-select">
+                            <option value="">Выберите связанную запись...</option>
+                        </select>
+                        <button type="button" id="addConnection" class="btn-small">
+                            <i class="fas fa-plus"></i> Добавить связь
+                        </button>
+                        <div id="connectionsContainer"></div>
+                    </div>
+                </div>
+                
+                <div class="form-section">
+                    <label><i class="fas fa-paperclip"></i> Вложения</label>
+                    <div class="attachments-input">
+                        <input type="file" id="fileInput" multiple style="display: none;">
+                        <button type="button" id="attachFile" class="btn-small">
+                            <i class="fas fa-paperclip"></i> Прикрепить файл
+                        </button>
+                        <div id="attachmentsContainer"></div>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="complexity-input">
+                        <label>Сложность реализации:</label>
+                        <input type="range" id="noteComplexity" min="1" max="10" value="5" class="slider">
+                        <span id="complexityValue">5/10</span>
+                    </div>
+                    
+                    <div class="time-estimate">
+                        <label>Оценка времени:</label>
+                        <input type="number" id="noteTimeEstimate" min="1" max="999" value="1" class="form-input-small">
+                        <select id="noteTimeUnit" class="form-select-small">
+                            <option value="hours">часов</option>
+                            <option value="days">дней</option>
+                            <option value="weeks">недель</option>
+                            <option value="months">месяцев</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="modal-footer">
+                <button id="cancelNote" class="btn-secondary">Отмена</button>
+                <button id="saveNote" class="btn-primary">
+                    <i class="fas fa-save"></i> Сохранить
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальное окно шаблонов -->
+    <div id="templateModal" class="modal">
+        <div class="modal-content">
+            <span class="close close-template">&times;</span>
+            <h3><i class="fas fa-file-alt"></i> Выберите шаблон</h3>
+            
+            <div class="templates-grid">
+                <div class="template-card" data-template="rpg">
+                    <h4>🎮 RPG Игра</h4>
+                    <p>Шаблон для ролевых игр: система персонажей, квесты, диалоги</p>
+                    <button class="btn-small use-template">Использовать</button>
+                </div>
+                
+                <div class="template-card" data-template="shooter">
+                    <h4>🔫 Шутер</h4>
+                    <p>Оружие, враги, боевая система, мультиплеер</p>
+                    <button class="btn-small use-template">Использовать</button>
+                </div>
+                
+                <div class="template-card" data-template="strategy">
+                    <h4>♟️ Стратегия</h4>
+                    <p>Ресурсы, юниты, тактическая карта, ИИ противника</p>
+                    <button class="btn-small use-template">Использовать</button>
+                </div>
+                
+                <div class="template-card" data-template="platformer">
+                    <h4>🏃‍♂️ Платформер</h4>
+                    <p>Управление, физика, уровни, враги, сбор предметов</p>
+                    <button class="btn-small use-template">Использовать</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальное окно GitHub -->
+    <div id="githubModal" class="modal">
+        <div class="modal-content">
+            <span class="close close-github">&times;</span>
+            <h3><i class="fab fa-github"></i> Синхронизация с GitHub</h3>
+            
+            <div class="github-form">
+                <div class="form-group">
+                    <label>GitHub Token:</label>
+                    <input type="password" id="githubToken" placeholder="ghp_..." class="form-input">
+                    <small>Нужен для доступа к репозиторию</small>
+                </div>
+                
+                <div class="form-group">
+                    <label>Репозиторий:</label>
+                    <input type="text" id="githubRepo" placeholder="username/repo-name" class="form-input">
+                </div>
+                
+                <div class="form-group">
+                    <label>Файл для синхронизации:</label>
+                    <input type="text" id="githubFile" value="gamedev-notes.json" class="form-input">
+                </div>
+                
+                <div class="form-actions">
+                    <button id="testGithub" class="btn-secondary">Проверить подключение</button>
+                    <button id="syncToGithub" class="btn-success">
+                        <i class="fas fa-cloud-upload-alt"></i> Синхронизировать
+                    </button>
+                    <button id="loadFromGithub" class="btn-primary">
+                        <i class="fas fa-cloud-download-alt"></i> Загрузить
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальное окно экспорта -->
+    <div id="exportModal" class="modal">
+        <div class="modal-content">
+            <span class="close close-export">&times;</span>
+            <h3><i class="fas fa-download"></i> Экспорт данных</h3>
+            
+            <div class="export-options">
+                <div class="export-format">
+                    <h4>Формат экспорта:</h4>
+                    <label><input type="radio" name="exportFormat" value="json" checked> JSON (полные данные)</label>
+                    <label><input type="radio" name="exportFormat" value="markdown"> Markdown (документация)</label>
+                    <label><input type="radio" name="exportFormat" value="pdf"> PDF (для презентаций)</label>
+                    <label><input type="radio" name="exportFormat" value="csv"> CSV (таблицы)</label>
+                </div>
+                
+                <div class="export-filter">
+                    <h4>Что экспортировать:</h4>
+                    <label><input type="checkbox" name="exportWhat" value="ideas" checked> Идеи</label>
+                    <label><input type="checkbox" name="exportWhat" value="mechanics" checked> Механики</label>
+                    <label><input type="checkbox" name="exportWhat" value="timeline"> Таймлайн</label>
+                    <label><input type="checkbox" name="exportWhat" value="connections"> Связи</label>
+                </div>
+                
+                <div class="export-actions">
+                    <button id="exportPreview" class="btn-secondary">Предпросмотр</button>
+                    <button id="exportExecute" class="btn-primary">Экспортировать</button>
+                </div>
+                
+                <div class="export-preview" id="exportPreviewArea" style="display: none;">
+                    <pre id="previewContent"></pre>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
