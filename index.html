@@ -3,479 +3,1988 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GameDev Блокнот PRO</title>
+    <title>GameDev Блокнот</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="style.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #0a0e14;
+            color: #e6edf3;
+            line-height: 1.6;
+            padding: 20px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        header {
+            text-align: center;
+            padding: 20px 0;
+            border-bottom: 1px solid #30363d;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            color: #58a6ff;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: #8b949e;
+            font-size: 1.1rem;
+        }
+
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .ideas-section {
+            background-color: #161b22;
+            border-radius: 12px;
+            padding: 25px;
+            border: 1px solid #30363d;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+        }
+
+        h2 {
+            color: #58a6ff;
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+            border-bottom: 2px solid #30363d;
+            padding-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #c9d1d9;
+            font-weight: 600;
+        }
+
+        input, textarea, select {
+            width: 100%;
+            padding: 12px 15px;
+            background-color: #0d1117;
+            border: 1px solid #3c444d;
+            border-radius: 8px;
+            color: #e6edf3;
+            font-size: 1rem;
+            transition: all 0.2s;
+        }
+
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: #58a6ff;
+            box-shadow: 0 0 0 2px rgba(88, 166, 255, 0.2);
+        }
+
+        textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .btn {
+            background-color: #238636;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn:hover {
+            background-color: #2ea043;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-secondary {
+            background-color: #30363d;
+        }
+
+        .btn-secondary:hover {
+            background-color: #484f58;
+        }
+
+        .btn-small {
+            padding: 8px 16px;
+            font-size: 0.9rem;
+        }
+
+        .btn-danger {
+            background-color: #da3633;
+        }
+
+        .btn-danger:hover {
+            background-color: #f85149;
+        }
+
+        .btn-warning {
+            background-color: #9e6a03;
+        }
+
+        .btn-warning:hover {
+            background-color: #bb8009;
+        }
+
+        .btn-info {
+            background-color: #1c6bb4;
+        }
+
+        .btn-info:hover {
+            background-color: #2380d6;
+        }
+
+        .idea-card {
+            background-color: #21262d;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 1px solid #3c444d;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .idea-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+            border-color: #58a6ff;
+        }
+
+        .idea-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+
+        .idea-title {
+            font-size: 1.5rem;
+            color: #58a6ff;
+            margin-bottom: 5px;
+        }
+
+        .idea-time {
+            color: #8b949e;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .idea-description {
+            margin-bottom: 15px;
+            color: #c9d1d9;
+            line-height: 1.5;
+            max-height: 100px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+        }
+
+        .idea-mechanics-preview {
+            margin-bottom: 15px;
+        }
+
+        .mechanics-title {
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #8b949e;
+        }
+
+        .idea-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 15px;
+            border-top: 1px solid #30363d;
+        }
+
+        .status-badge {
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .status-planning {
+            background-color: #0e4429;
+            color: #3fb950;
+        }
+
+        .status-development {
+            background-color: #1c2b41;
+            color: #58a6ff;
+        }
+
+        .status-testing {
+            background-color: #3d2302;
+            color: #f0883e;
+        }
+
+        .status-completed {
+            background-color: #1c532c;
+            color: #3fb950;
+        }
+
+        .idea-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .empty-message {
+            text-align: center;
+            padding: 40px 20px;
+            color: #8b949e;
+            font-size: 1.1rem;
+        }
+
+        .empty-message i {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            color: #30363d;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px 0;
+            margin-top: 30px;
+            border-top: 1px solid #30363d;
+            color: #8b949e;
+            font-size: 0.9rem;
+        }
+
+        /* Модальные окна */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.95);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            backdrop-filter: blur(5px);
+        }
+
+        .modal {
+            background-color: #161b22;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 800px;
+            max-height: 90vh;
+            overflow-y: auto;
+            border: 1px solid #30363d;
+            animation: modalFadeIn 0.3s ease-out;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+        }
+
+        @keyframes modalFadeIn {
+            from { opacity: 0; transform: translateY(-30px) scale(0.95); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 25px 25px 15px;
+            border-bottom: 1px solid #30363d;
+        }
+
+        .modal-title {
+            font-size: 1.8rem;
+            color: #58a6ff;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            color: #8b949e;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+
+        .modal-close:hover {
+            background-color: #21262d;
+            color: #f85149;
+        }
+
+        .modal-body {
+            padding: 25px;
+        }
+
+        .modal-section {
+            margin-bottom: 25px;
+        }
+
+        .modal-section-title {
+            font-size: 1.3rem;
+            color: #58a6ff;
+            margin-bottom: 15px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #30363d;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .modal-description {
+            line-height: 1.6;
+            color: #c9d1d9;
+            font-size: 1.05rem;
+            white-space: pre-line;
+        }
+
+        .modal-mechanics-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .modal-mechanic-item {
+            background-color: #21262d;
+            border-radius: 8px;
+            padding: 20px;
+            border: 1px solid #30363d;
+            transition: all 0.3s;
+        }
+
+        .modal-mechanic-item:hover {
+            border-color: #58a6ff;
+            transform: translateX(5px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .modal-mechanic-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 10px;
+        }
+
+        .modal-mechanic-name {
+            font-size: 1.2rem;
+            color: #c9d1d9;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .modal-mechanic-description {
+            color: #8b949e;
+            line-height: 1.5;
+            margin-bottom: 10px;
+            white-space: pre-line;
+        }
+
+        .modal-mechanic-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+
+        .modal-footer {
+            padding: 20px 25px;
+            border-top: 1px solid #30363d;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-time-info {
+            color: #8b949e;
+            font-size: 0.9rem;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        /* Статусы механик */
+        .mechanic-status-badge {
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .mechanic-status-pending {
+            background-color: #3d2302;
+            color: #f0883e;
+            border: 1px solid #f0883e;
+        }
+
+        .mechanic-status-in-progress {
+            background-color: #1c2b41;
+            color: #58a6ff;
+            border: 1px solid #58a6ff;
+        }
+
+        .mechanic-status-ready {
+            background-color: #0e4429;
+            color: #3fb950;
+            border: 1px solid #3fb950;
+        }
+
+        .mechanic-status-rejected {
+            background-color: #5a1c1c;
+            color: #f85149;
+            border: 1px solid #f85149;
+        }
+
+        /* Модальное окно для создания/редактирования идеи */
+        .idea-form-modal {
+            max-width: 700px;
+        }
+
+        /* Модальное окно для создания/редактирования механики */
+        .mechanic-form-modal {
+            max-width: 600px;
+        }
+
+        /* Модальное окно для импорта/экспорта */
+        .import-export-modal {
+            max-width: 700px;
+        }
+
+        /* Сетка механик в превью */
+        .mechanics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .mechanic-preview {
+            background-color: #30363d;
+            padding: 10px;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-left: 4px solid #f0883e;
+        }
+
+        .mechanic-preview.in-progress {
+            border-left-color: #58a6ff;
+        }
+
+        .mechanic-preview.ready {
+            border-left-color: #3fb950;
+        }
+
+        .mechanic-preview.rejected {
+            border-left-color: #f85149;
+        }
+
+        /* Панель управления */
+        .control-panel {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        /* Адаптация для мобильных устройств */
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .ideas-section {
+                padding: 15px;
+            }
+            
+            .idea-header {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .idea-footer {
+                flex-direction: column;
+                gap: 15px;
+                align-items: flex-start;
+            }
+            
+            .idea-actions {
+                align-self: stretch;
+                justify-content: flex-end;
+                flex-wrap: wrap;
+            }
+            
+            .modal-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+            
+            .modal-footer {
+                flex-direction: column;
+                gap: 15px;
+                align-items: flex-start;
+            }
+            
+            .modal-mechanic-header {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .modal-mechanic-actions {
+                justify-content: flex-start;
+            }
+            
+            .mechanics-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .control-panel {
+                flex-direction: column;
+            }
+        }
+    </style>
 </head>
 <body>
     <div class="container">
         <header>
-            <div class="header-main">
-                <h1><i class="fas fa-gamepad"></i> GameDev Блокнот PRO</h1>
-                <p class="subtitle">Планирование, документирование и организация игровых проектов</p>
-            </div>
-            
-            <div class="quick-stats">
-                <div class="stat">
-                    <span class="stat-number" id="totalNotes">0</span>
-                    <span class="stat-label">Всего записей</span>
-                </div>
-                <div class="stat">
-                    <span class="stat-number" id="highPriority">0</span>
-                    <span class="stat-label">Высокий приоритет</span>
-                </div>
-                <div class="stat">
-                    <span class="stat-number" id="ideasCount">0</span>
-                    <span class="stat-label">Идей</span>
-                </div>
-                <div class="stat">
-                    <span class="stat-number" id="mechanicsCount">0</span>
-                    <span class="stat-label">Механик</span>
-                </div>
-            </div>
+            <h1><i class="fas fa-gamepad"></i> GameDev Блокнот</h1>
+            <p class="subtitle">Записывайте идеи, механики и отслеживайте статус разработки</p>
         </header>
+        
+        <div class="main-content">
+            <section class="ideas-section">
+                <h2>
+                    <span>Мои игровые идеи</span>
+                    <span id="ideasCount" style="color: #8b949e; font-size: 1rem; font-weight: normal;">(0)</span>
+                </h2>
+                
+                <div class="control-panel">
+                    <button id="addNewIdeaBtn" class="btn">
+                        <i class="fas fa-plus"></i> Добавить новую идею
+                    </button>
+                    
+                    <button id="exportBtn" class="btn btn-secondary">
+                        <i class="fas fa-file-export"></i> Экспорт данных
+                    </button>
+                    
+                    <button id="importBtn" class="btn btn-secondary">
+                        <i class="fas fa-file-import"></i> Импорт данных
+                    </button>
+                    
+                    <button id="backupBtn" class="btn btn-warning">
+                        <i class="fas fa-download"></i> Создать резервную копию
+                    </button>
+                </div>
+                
+                <div id="ideasContainer">
+                    <!-- Идеи будут добавляться здесь -->
+                    <div class="empty-message" id="emptyMessage">
+                        <i class="fas fa-lightbulb"></i>
+                        <p>У вас пока нет сохраненных идей.<br>Добавьте первую идею, нажав на кнопку выше.</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+        
+        <footer>
+            <p>GameDev Блокнот | Все данные сохраняются автоматически в вашем браузере</p>
+            <p style="margin-top: 10px; font-size: 0.8rem; color: #6e7681;">
+                Используйте импорт/экспорт для резервного копирования и переноса данных
+            </p>
+        </footer>
+    </div>
 
-        <div class="main-controls">
-            <div class="search-container">
-                <i class="fas fa-search"></i>
-                <input type="text" id="searchInput" placeholder="Поиск по заметкам, тегам...">
-                <button id="clearSearch" class="icon-btn" title="Очистить поиск">
+    <!-- Модальное окно для просмотра идеи -->
+    <div id="ideaViewModal" class="modal-overlay">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 class="modal-title" id="viewIdeaTitle">Название идеи</h3>
+                <button class="modal-close" id="closeViewModal">
                     <i class="fas fa-times"></i>
                 </button>
             </div>
             
-            <div class="filter-controls">
-                <select id="filterType" class="filter-select">
-                    <option value="all">Все типы</option>
-                    <option value="idea">Идеи</option>
-                    <option value="mechanic">Механики</option>
-                </select>
-                
-                <select id="filterPriority" class="filter-select">
-                    <option value="all">Все приоритеты</option>
-                    <option value="high">Высокий</option>
-                    <option value="medium">Средний</option>
-                    <option value="low">Низкий</option>
-                </select>
-                
-                <select id="filterGenre" class="filter-select">
-                    <option value="all">Все жанры</option>
-                    <option value="rpg">RPG</option>
-                    <option value="shooter">Шутер</option>
-                    <option value="strategy">Стратегия</option>
-                    <option value="adventure">Приключение</option>
-                    <option value="simulator">Симулятор</option>
-                    <option value="puzzle">Головоломка</option>
-                    <option value="platformer">Платформер</option>
-                    <option value="horror">Хоррор</option>
-                </select>
-                
-                <div class="tag-filter">
-                    <input type="text" id="tagFilter" placeholder="Фильтр по тегам...">
-                    <div id="activeTags"></div>
-                </div>
-            </div>
-        </div>
-
-        <div class="action-buttons">
-            <div class="button-group">
-                <button id="newIdea" class="btn-primary">
-                    <i class="fas fa-lightbulb"></i> Новая идея
-                </button>
-                <button id="newMechanic" class="btn-secondary">
-                    <i class="fas fa-cogs"></i> Новая механика
-                </button>
-                <button id="newTemplate" class="btn-success">
-                    <i class="fas fa-file-alt"></i> Из шаблона
-                </button>
-            </div>
-            
-            <div class="button-group">
-                <button id="saveAll" class="btn-success">
-                    <i class="fas fa-save"></i> Сохранить всё
-                </button>
-                <button id="exportBtn" class="btn-info">
-                    <i class="fas fa-download"></i> Экспорт
-                </button>
-                <button id="importBtn" class="btn-warning">
-                    <i class="fas fa-upload"></i> Импорт
-                </button>
-                <button id="githubSync" class="btn-dark">
-                    <i class="fab fa-github"></i> GitHub
-                </button>
-            </div>
-        </div>
-
-        <div class="main-content">
-            <aside class="sidebar">
-                <div class="sidebar-section">
-                    <h3><i class="fas fa-filter"></i> Быстрые фильтры</h3>
-                    <div class="quick-filters">
-                        <button class="quick-filter" data-filter="priority:high">
-                            <i class="fas fa-exclamation-circle"></i> Высокий приоритет
-                        </button>
-                        <button class="quick-filter" data-filter="type:mechanic">
-                            <i class="fas fa-cogs"></i> Все механики
-                        </button>
-                        <button class="quick-filter" data-filter="type:idea">
-                            <i class="fas fa-lightbulb"></i> Все идеи
-                        </button>
-                        <button class="quick-filter" data-filter="status:todo">
-                            <i class="fas fa-clock"></i> В ожидании
-                        </button>
-                        <button class="quick-filter" data-filter="status:inprogress">
-                            <i class="fas fa-spinner"></i> В разработке
-                        </button>
-                    </div>
-                </div>
-                
-                <div class="sidebar-section">
-                    <h3><i class="fas fa-tags"></i> Популярные теги</h3>
-                    <div class="popular-tags" id="popularTags">
-                        <!-- Теги будут загружены динамически -->
-                    </div>
-                </div>
-                
-                <div class="sidebar-section">
-                    <h3><i class="fas fa-calendar-alt"></i> Календарь</h3>
-                    <div class="mini-calendar">
-                        <div class="calendar-header">
-                            <button id="prevMonth"><i class="fas fa-chevron-left"></i></button>
-                            <span id="currentMonth">Декабрь 2024</span>
-                            <button id="nextMonth"><i class="fas fa-chevron-right"></i></button>
-                        </div>
-                        <div class="calendar-grid" id="calendarGrid">
-                            <!-- Календарь будет сгенерирован динамически -->
-                        </div>
-                        <div class="calendar-notes" id="calendarNotes">
-                            <p>Заметок на выбранную дату: <span id="notesCount">0</span></p>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="sidebar-section">
-                    <h3><i class="fas fa-chart-line"></i> Статистика</h3>
-                    <div class="stats-chart">
-                        <canvas id="statsChart" width="300" height="200"></canvas>
-                    </div>
-                </div>
-            </aside>
-
-            <main class="content-area">
-                <div class="tabs">
-                    <button class="tab active" data-tab="ideas">
-                        <i class="fas fa-lightbulb"></i> Идеи игр
-                        <span class="tab-badge" id="ideasBadge">0</span>
-                    </button>
-                    <button class="tab" data-tab="mechanics">
-                        <i class="fas fa-cogs"></i> Механики
-                        <span class="tab-badge" id="mechanicsBadge">0</span>
-                    </button>
-                    <button class="tab" data-tab="timeline">
-                        <i class="fas fa-road"></i> Таймлайн
-                        <span class="tab-badge" id="timelineBadge">0</span>
-                    </button>
-                    <button class="tab" data-tab="connections">
-                        <i class="fas fa-project-diagram"></i> Связи
-                        <span class="tab-badge" id="connectionsBadge">0</span>
-                    </button>
-                </div>
-                
-                <div class="tab-content active" id="ideasTab">
-                    <div class="section-header">
-                        <h2><i class="fas fa-lightbulb"></i> Идеи игр</h2>
-                        <div class="section-actions">
-                            <button class="btn-small" id="sortByRating">
-                                <i class="fas fa-star"></i> По рейтингу
-                            </button>
-                            <button class="btn-small" id="sortByDate">
-                                <i class="fas fa-calendar"></i> По дате
-                            </button>
-                        </div>
-                    </div>
-                    <div class="cards-container" id="ideasContainer"></div>
-                </div>
-                
-                <div class="tab-content" id="mechanicsTab">
-                    <div class="section-header">
-                        <h2><i class="fas fa-cogs"></i> Механики</h2>
-                        <div class="section-actions">
-                            <select id="mechanicCategory" class="filter-select">
-                                <option value="all">Все категории</option>
-                                <option value="combat">Боевые системы</option>
-                                <option value="economy">Экономика</option>
-                                <option value="dialogue">Диалоги</option>
-                                <option value="ai">Искусственный интеллект</option>
-                                <option value="progression">Прогрессия</option>
-                                <option value="multiplayer">Мультиплеер</option>
-                                <option value="ui">Пользовательский интерфейс</option>
-                                <option value="physics">Физика</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="cards-container" id="mechanicsContainer"></div>
-                </div>
-                
-                <div class="tab-content" id="timelineTab">
-                    <div class="timeline-view">
-                        <h2><i class="fas fa-road"></i> Таймлайн разработки</h2>
-                        <div class="timeline-controls">
-                            <button id="addMilestone" class="btn-primary">
-                                <i class="fas fa-flag"></i> Добавить веху
-                            </button>
-                            <button id="generateRoadmap" class="btn-success">
-                                <i class="fas fa-map"></i> Создать roadmap
-                            </button>
-                        </div>
-                        <div class="timeline-container" id="timelineContainer">
-                            <!-- Таймлайн будет сгенерирован динамически -->
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="tab-content" id="connectionsTab">
-                    <div class="connections-view">
-                        <h2><i class="fas fa-project-diagram"></i> Связи между идеями и механиками</h2>
-                        <div class="graph-container">
-                            <canvas id="connectionsGraph" width="800" height="600"></canvas>
-                        </div>
-                        <div class="connections-list" id="connectionsList">
-                            <!-- Список связей будет сгенерирован динамически -->
-                        </div>
-                    </div>
-                </div>
-            </main>
-        </div>
-    </div>
-
-    <!-- Модальные окна -->
-    <div id="modal" class="modal">
-        <div class="modal-content large-modal">
-            <span class="close">&times;</span>
-            <h3 id="modalTitle">Новая запись</h3>
-            
             <div class="modal-body">
-                <div class="form-row">
-                    <input type="text" id="noteTitle" placeholder="Название идеи/механики..." class="form-input">
-                    <select id="noteType" class="form-select">
-                        <option value="idea">Идея игры</option>
-                        <option value="mechanic">Механика</option>
-                    </select>
-                </div>
-                
-                <div class="form-row">
-                    <select id="noteGenre" class="form-select">
-                        <option value="">Выберите жанр</option>
-                        <option value="rpg">RPG</option>
-                        <option value="shooter">Шутер</option>
-                        <option value="strategy">Стратегия</option>
-                        <option value="adventure">Приключение</option>
-                        <option value="simulator">Симулятор</option>
-                        <option value="puzzle">Головоломка</option>
-                        <option value="platformer">Платформер</option>
-                        <option value="horror">Хоррор</option>
-                        <option value="mmo">MMO</option>
-                        <option value="roguelike">Roguelike</option>
-                    </select>
-                    
-                    <select id="noteStatus" class="form-select">
-                        <option value="todo">В ожидании</option>
-                        <option value="inprogress">В разработке</option>
-                        <option value="completed">Завершено</option>
-                        <option value="abandoned">Отложено</option>
-                    </select>
-                </div>
-                
-                <div class="form-row">
-                    <select id="notePriority" class="form-select">
-                        <option value="low">🔵 Низкий приоритет</option>
-                        <option value="medium">🟡 Средний приоритет</option>
-                        <option value="high">🔴 Высокий приоритет</option>
-                    </select>
-                    
-                    <div class="rating-input">
-                        <span>Оценка:</span>
-                        <div class="stars" id="ratingStars">
-                            <span class="star" data-rating="1">★</span>
-                            <span class="star" data-rating="2">★</span>
-                            <span class="star" data-rating="3">★</span>
-                            <span class="star" data-rating="4">★</span>
-                            <span class="star" data-rating="5">★</span>
-                        </div>
-                        <input type="hidden" id="noteRating" value="3">
+                <div class="modal-section">
+                    <h4 class="modal-section-title"><i class="fas fa-align-left"></i> Описание</h4>
+                    <div class="modal-description" id="viewIdeaDescription">
+                        Описание идеи...
                     </div>
                 </div>
                 
-                <textarea id="noteContent" placeholder="Подробное описание..." class="form-textarea"></textarea>
-                
-                <div class="form-section">
-                    <label><i class="fas fa-tags"></i> Теги</label>
-                    <div class="tags-input">
-                        <input type="text" id="tagInput" placeholder="Добавить тег (нажмите Enter)">
-                        <div id="tagsContainer"></div>
-                    </div>
-                </div>
-                
-                <div class="form-section">
-                    <label><i class="fas fa-link"></i> Связанные записи</label>
-                    <div class="connections-input">
-                        <select id="connectionSelect" class="form-select">
-                            <option value="">Выберите связанную запись...</option>
-                        </select>
-                        <button type="button" id="addConnection" class="btn-small">
-                            <i class="fas fa-plus"></i> Добавить связь
+                <div class="modal-section">
+                    <div class="mechanics-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                        <h4 class="modal-section-title"><i class="fas fa-cogs"></i> Механики игры</h4>
+                        <button type="button" id="addNewMechanicBtn" class="btn btn-small">
+                            <i class="fas fa-plus"></i> Добавить механику
                         </button>
-                        <div id="connectionsContainer"></div>
-                    </div>
-                </div>
-                
-                <div class="form-section">
-                    <label><i class="fas fa-paperclip"></i> Вложения</label>
-                    <div class="attachments-input">
-                        <input type="file" id="fileInput" multiple style="display: none;">
-                        <button type="button" id="attachFile" class="btn-small">
-                            <i class="fas fa-paperclip"></i> Прикрепить файл
-                        </button>
-                        <div id="attachmentsContainer"></div>
-                    </div>
-                </div>
-                
-                <div class="form-row">
-                    <div class="complexity-input">
-                        <label>Сложность реализации:</label>
-                        <input type="range" id="noteComplexity" min="1" max="10" value="5" class="slider">
-                        <span id="complexityValue">5/10</span>
                     </div>
                     
-                    <div class="time-estimate">
-                        <label>Оценка времени:</label>
-                        <input type="number" id="noteTimeEstimate" min="1" max="999" value="1" class="form-input-small">
-                        <select id="noteTimeUnit" class="form-select-small">
-                            <option value="hours">часов</option>
-                            <option value="days">дней</option>
-                            <option value="weeks">недель</option>
-                            <option value="months">месяцев</option>
-                        </select>
+                    <div class="modal-mechanics-list" id="viewMechanicsList">
+                        <!-- Механики будут добавляться здесь -->
                     </div>
                 </div>
             </div>
             
             <div class="modal-footer">
-                <button id="cancelNote" class="btn-secondary">Отмена</button>
-                <button id="saveNote" class="btn-primary">
-                    <i class="fas fa-save"></i> Сохранить
+                <div class="modal-time-info">
+                    <div><i class="far fa-clock"></i> Создана: <span id="viewCreatedAt">...</span></div>
+                    <div><i class="fas fa-history"></i> Обновлена: <span id="viewUpdatedAt">...</span></div>
+                    <div>Статус: <span id="viewStatusBadge" class="status-badge status-planning">Планирование</span></div>
+                </div>
+                <div style="display: flex; gap: 10px;">
+                    <button id="editIdeaFromViewBtn" class="btn btn-secondary">
+                        <i class="fas fa-edit"></i> Редактировать идею
+                    </button>
+                    <button id="closeViewBtn" class="btn">
+                        <i class="fas fa-times"></i> Закрыть
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальное окно для создания/редактирования идеи -->
+    <div id="ideaFormModal" class="modal-overlay">
+        <div class="modal idea-form-modal">
+            <div class="modal-header">
+                <h3 class="modal-title" id="formIdeaTitle">Добавить новую идею</h3>
+                <button class="modal-close" id="closeFormModal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="formIdeaName"><i class="fas fa-heading"></i> Название идеи</label>
+                    <input type="text" id="formIdeaName" placeholder="Название вашей игровой идеи">
+                </div>
+                
+                <div class="form-group">
+                    <label for="formIdeaDescription"><i class="fas fa-align-left"></i> Описание идеи</label>
+                    <textarea id="formIdeaDescription" placeholder="Опишите вашу игровую идею..." rows="6"></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="formIdeaStatus"><i class="fas fa-tasks"></i> Статус разработки</label>
+                    <select id="formIdeaStatus">
+                        <option value="planning">Планирование</option>
+                        <option value="development">В разработке</option>
+                        <option value="testing">Тестирование</option>
+                        <option value="completed">Завершено</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="modal-footer">
+                <button id="saveIdeaFormBtn" class="btn">
+                    <i class="fas fa-save"></i> Сохранить идею
+                </button>
+                <button id="cancelIdeaFormBtn" class="btn btn-secondary">
+                    <i class="fas fa-times"></i> Отмена
                 </button>
             </div>
         </div>
     </div>
 
-    <!-- Модальное окно шаблонов -->
-    <div id="templateModal" class="modal">
-        <div class="modal-content">
-            <span class="close close-template">&times;</span>
-            <h3><i class="fas fa-file-alt"></i> Выберите шаблон</h3>
+    <!-- Модальное окно для создания/редактирования механики -->
+    <div id="mechanicFormModal" class="modal-overlay">
+        <div class="modal mechanic-form-modal">
+            <div class="modal-header">
+                <h3 class="modal-title" id="formMechanicTitle">Добавить механику</h3>
+                <button class="modal-close" id="closeMechanicFormModal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
             
-            <div class="templates-grid">
-                <div class="template-card" data-template="rpg">
-                    <h4>🎮 RPG Игра</h4>
-                    <p>Шаблон для ролевых игр: система персонажей, квесты, диалоги</p>
-                    <button class="btn-small use-template">Использовать</button>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="formMechanicName"><i class="fas fa-heading"></i> Название механики</label>
+                    <input type="text" id="formMechanicName" placeholder="Название игровой механики">
                 </div>
                 
-                <div class="template-card" data-template="shooter">
-                    <h4>🔫 Шутер</h4>
-                    <p>Оружие, враги, боевая система, мультиплеер</p>
-                    <button class="btn-small use-template">Использовать</button>
+                <div class="form-group">
+                    <label for="formMechanicDescription"><i class="fas fa-align-left"></i> Описание механики</label>
+                    <textarea id="formMechanicDescription" placeholder="Опишите механику..." rows="5"></textarea>
                 </div>
                 
-                <div class="template-card" data-template="strategy">
-                    <h4>♟️ Стратегия</h4>
-                    <p>Ресурсы, юниты, тактическая карта, ИИ противника</p>
-                    <button class="btn-small use-template">Использовать</button>
+                <div class="form-group">
+                    <label for="formMechanicStatus"><i class="fas fa-tasks"></i> Статус механики</label>
+                    <select id="formMechanicStatus">
+                        <option value="pending">В ожидании</option>
+                        <option value="in-progress">В разработке</option>
+                        <option value="ready">Готово</option>
+                        <option value="rejected">Отклонено</option>
+                    </select>
                 </div>
                 
-                <div class="template-card" data-template="platformer">
-                    <h4>🏃‍♂️ Платформер</h4>
-                    <p>Управление, физика, уровни, враги, сбор предметов</p>
-                    <button class="btn-small use-template">Использовать</button>
+                <div class="form-group">
+                    <label><i class="fas fa-info-circle"></i> Пояснение статусов:</label>
+                    <div style="background-color: #21262d; padding: 15px; border-radius: 6px; font-size: 0.9rem; color: #8b949e;">
+                        <div><span class="mechanic-status-badge mechanic-status-pending">В ожидании</span> - механика запланирована, но не начата</div>
+                        <div><span class="mechanic-status-badge mechanic-status-in-progress">В разработке</span> - механика в активной разработке</div>
+                        <div><span class="mechanic-status-badge mechanic-status-ready">Готово</span> - механика реализована и протестирована</div>
+                        <div><span class="mechanic-status-badge mechanic-status-rejected">Отклонено</span> - механика не будет реализована</div>
+                    </div>
                 </div>
+            </div>
+            
+            <div class="modal-footer">
+                <button id="saveMechanicFormBtn" class="btn">
+                    <i class="fas fa-save"></i> Сохранить механику
+                </button>
+                <button id="cancelMechanicFormBtn" class="btn btn-secondary">
+                    <i class="fas fa-times"></i> Отмена
+                </button>
             </div>
         </div>
     </div>
 
-    <!-- Модальное окно GitHub -->
-    <div id="githubModal" class="modal">
-        <div class="modal-content">
-            <span class="close close-github">&times;</span>
-            <h3><i class="fab fa-github"></i> Синхронизация с GitHub</h3>
+    <!-- Модальное окно для импорта/экспорта -->
+    <div id="importExportModal" class="modal-overlay">
+        <div class="modal import-export-modal">
+            <div class="modal-header">
+                <h3 class="modal-title" id="importExportTitle">Импорт и экспорт данных</h3>
+                <button class="modal-close" id="closeImportExportModal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
             
-            <div class="github-form">
-                <div class="form-group">
-                    <label>GitHub Token:</label>
-                    <input type="password" id="githubToken" placeholder="ghp_..." class="form-input">
-                    <small>Нужен для доступа к репозиторию</small>
+            <div class="modal-body">
+                <div style="display: flex; flex-direction: column; gap: 25px;">
+                    <!-- Экспорт -->
+                    <div class="modal-section">
+                        <h4 class="modal-section-title"><i class="fas fa-file-export"></i> Экспорт данных</h4>
+                        <p style="margin-bottom: 15px; color: #c9d1d9;">Сохраните все ваши идеи в JSON файл для резервного копирования или переноса на другое устройство.</p>
+                        
+                        <div style="display: flex; flex-direction: column; gap: 15px;">
+                            <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                                <button id="exportJSONBtn" class="btn btn-small">
+                                    <i class="fas fa-download"></i> Экспорт в JSON файл
+                                </button>
+                                <button id="copyToClipboardBtn" class="btn btn-small btn-secondary">
+                                    <i class="fas fa-copy"></i> Копировать JSON в буфер
+                                </button>
+                            </div>
+                            
+                            <div style="background-color: #21262d; padding: 15px; border-radius: 6px;">
+                                <h5 style="margin-bottom: 10px; color: #58a6ff;">Информация о данных</h5>
+                                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; font-size: 0.9rem;">
+                                    <div>Всего идей: <span id="exportIdeaCount">0</span></div>
+                                    <div>Всего механик: <span id="exportMechanicCount">0</span></div>
+                                    <div>Дата экспорта: <span id="exportDate">-</span></div>
+                                    <div>Размер данных: <span id="exportSize">-</span></div>
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <label style="margin-bottom: 10px;">Превью данных (JSON):</label>
+                                <textarea id="exportDataPreview" rows="8" style="width: 100%; font-family: monospace; font-size: 0.9rem;" readonly placeholder="Здесь появится JSON с данными..."></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Импорт -->
+                    <div class="modal-section">
+                        <h4 class="modal-section-title"><i class="fas fa-file-import"></i> Импорт данных</h4>
+                        <p style="margin-bottom: 15px; color: #c9d1d9;">Импортируйте данные из JSON файла. Идеи будут объединены с существующими (дубликаты не создаются).</p>
+                        
+                        <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap; margin-bottom: 15px;">
+                            <input type="file" id="importFileInput" accept=".json,application/json" style="display: none;">
+                            <button id="selectFileBtn" class="btn btn-small">
+                                <i class="fas fa-folder-open"></i> Выбрать файл
+                            </button>
+                            <span id="selectedFileName" style="color: #8b949e;">Файл не выбран</span>
+                        </div>
+                        
+                        <div style="margin-bottom: 15px;">
+                            <label for="importDataInput">Или вставьте JSON данные:</label>
+                            <textarea id="importDataInput" rows="8" style="width: 100%; font-family: monospace; font-size: 0.9rem;" placeholder='{"ideas": [...]}'></textarea>
+                        </div>
+                        
+                        <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 15px;">
+                            <button id="importMergeBtn" class="btn btn-small">
+                                <i class="fas fa-plus-circle"></i> Объединить с существующими
+                            </button>
+                            <button id="importReplaceBtn" class="btn btn-small btn-warning">
+                                <i class="fas fa-exchange-alt"></i> Заменить все данные
+                            </button>
+                            <button id="clearImportBtn" class="btn btn-small btn-secondary">
+                                <i class="fas fa-broom"></i> Очистить
+                            </button>
+                        </div>
+                        
+                        <div style="background-color: #21262d; padding: 15px; border-radius: 6px; color: #8b949e; font-size: 0.9rem;">
+                            <p><i class="fas fa-info-circle"></i> <strong>Объединить с существующими</strong> - добавит новые идеи к текущим (дубликаты по ID не добавляются)</p>
+                            <p><i class="fas fa-exclamation-triangle"></i> <strong>Заменить все данные</strong> - удалит текущие данные и заменит их импортируемыми</p>
+                        </div>
+                    </div>
                 </div>
-                
-                <div class="form-group">
-                    <label>Репозиторий:</label>
-                    <input type="text" id="githubRepo" placeholder="username/repo-name" class="form-input">
-                </div>
-                
-                <div class="form-group">
-                    <label>Файл для синхронизации:</label>
-                    <input type="text" id="githubFile" value="gamedev-notes.json" class="form-input">
-                </div>
-                
-                <div class="form-actions">
-                    <button id="testGithub" class="btn-secondary">Проверить подключение</button>
-                    <button id="syncToGithub" class="btn-success">
-                        <i class="fas fa-cloud-upload-alt"></i> Синхронизировать
-                    </button>
-                    <button id="loadFromGithub" class="btn-primary">
-                        <i class="fas fa-cloud-download-alt"></i> Загрузить
-                    </button>
-                </div>
+            </div>
+            
+            <div class="modal-footer">
+                <button id="closeImportExportBtn" class="btn">
+                    <i class="fas fa-times"></i> Закрыть
+                </button>
             </div>
         </div>
     </div>
 
-    <!-- Модальное окно экспорта -->
-    <div id="exportModal" class="modal">
-        <div class="modal-content">
-            <span class="close close-export">&times;</span>
-            <h3><i class="fas fa-download"></i> Экспорт данных</h3>
+    <!-- Модальное окно для создания резервной копии -->
+    <div id="backupModal" class="modal-overlay">
+        <div class="modal" style="max-width: 600px;">
+            <div class="modal-header">
+                <h3 class="modal-title"><i class="fas fa-download"></i> Резервное копирование</h3>
+                <button class="modal-close" id="closeBackupModal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
             
-            <div class="export-options">
-                <div class="export-format">
-                    <h4>Формат экспорта:</h4>
-                    <label><input type="radio" name="exportFormat" value="json" checked> JSON (полные данные)</label>
-                    <label><input type="radio" name="exportFormat" value="markdown"> Markdown (документация)</label>
-                    <label><input type="radio" name="exportFormat" value="pdf"> PDF (для презентаций)</label>
-                    <label><input type="radio" name="exportFormat" value="csv"> CSV (таблицы)</label>
+            <div class="modal-body">
+                <div class="modal-section">
+                    <h4 class="modal-section-title"><i class="fas fa-history"></i> Автоматические резервные копии</h4>
+                    <p style="margin-bottom: 15px; color: #c9d1d9;">Система автоматически создает резервные копии ваших данных. Вы можете восстановить данные из любой из них.</p>
+                    
+                    <div style="display: flex; flex-direction: column; gap: 15px;">
+                        <div style="background-color: #21262d; padding: 15px; border-radius: 6px;">
+                            <h5 style="margin-bottom: 10px; color: #58a6ff;">Текущая автоматическая резервная копия</h5>
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; font-size: 0.9rem;">
+                                <div>Дата создания: <span id="autoBackupDate">-</span></div>
+                                <div>Количество идей: <span id="autoBackupCount">0</span></div>
+                            </div>
+                            <div style="margin-top: 15px;">
+                                <button id="restoreAutoBackupBtn" class="btn btn-small">
+                                    <i class="fas fa-undo"></i> Восстановить из автоматической копии
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div style="background-color: #21262d; padding: 15px; border-radius: 6px;">
+                            <h5 style="margin-bottom: 10px; color: #58a6ff;">Ручное резервное копирование</h5>
+                            <p style="margin-bottom: 10px; font-size: 0.9rem;">Создайте резервную копию прямо сейчас и скачайте ее как файл:</p>
+                            <div style="display: flex; gap: 10px;">
+                                <button id="createManualBackupBtn" class="btn btn-small">
+                                    <i class="fas fa-save"></i> Создать и скачать резервную копию
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div style="background-color: #21262d; padding: 15px; border-radius: 6px;">
+                            <h5 style="margin-bottom: 10px; color: #58a6ff;">Очистка данных</h5>
+                            <p style="margin-bottom: 10px; font-size: 0.9rem; color: #f0883e;">
+                                <i class="fas fa-exclamation-triangle"></i> Внимание! Это действие удалит все ваши идеи и механики. Рекомендуется сделать резервную копию перед очисткой.
+                            </p>
+                            <button id="clearAllDataBtn" class="btn btn-small btn-danger">
+                                <i class="fas fa-trash"></i> Очистить все данные
+                            </button>
+                        </div>
+                    </div>
                 </div>
-                
-                <div class="export-filter">
-                    <h4>Что экспортировать:</h4>
-                    <label><input type="checkbox" name="exportWhat" value="ideas" checked> Идеи</label>
-                    <label><input type="checkbox" name="exportWhat" value="mechanics" checked> Механики</label>
-                    <label><input type="checkbox" name="exportWhat" value="timeline"> Таймлайн</label>
-                    <label><input type="checkbox" name="exportWhat" value="connections"> Связи</label>
-                </div>
-                
-                <div class="export-actions">
-                    <button id="exportPreview" class="btn-secondary">Предпросмотр</button>
-                    <button id="exportExecute" class="btn-primary">Экспортировать</button>
-                </div>
-                
-                <div class="export-preview" id="exportPreviewArea" style="display: none;">
-                    <pre id="previewContent"></pre>
-                </div>
+            </div>
+            
+            <div class="modal-footer">
+                <button id="closeBackupBtn" class="btn">
+                    <i class="fas fa-times"></i> Закрыть
+                </button>
             </div>
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <script src="script.js"></script>
+    <script>
+        // Глобальные переменные
+        let ideas = [];
+        let currentViewIdeaId = null;
+        let currentEditIdeaId = null;
+        let currentEditMechanicIndex = null;
+        let autoBackupData = null;
+        
+        // Элементы DOM
+        const addNewIdeaBtn = document.getElementById('addNewIdeaBtn');
+        const exportBtn = document.getElementById('exportBtn');
+        const importBtn = document.getElementById('importBtn');
+        const backupBtn = document.getElementById('backupBtn');
+        const ideasContainer = document.getElementById('ideasContainer');
+        const emptyMessage = document.getElementById('emptyMessage');
+        const ideasCount = document.getElementById('ideasCount');
+        
+        // Модальные окна
+        const ideaViewModal = document.getElementById('ideaViewModal');
+        const closeViewModal = document.getElementById('closeViewModal');
+        const closeViewBtn = document.getElementById('closeViewBtn');
+        const viewIdeaTitle = document.getElementById('viewIdeaTitle');
+        const viewIdeaDescription = document.getElementById('viewIdeaDescription');
+        const viewMechanicsList = document.getElementById('viewMechanicsList');
+        const addNewMechanicBtn = document.getElementById('addNewMechanicBtn');
+        const editIdeaFromViewBtn = document.getElementById('editIdeaFromViewBtn');
+        const viewCreatedAt = document.getElementById('viewCreatedAt');
+        const viewUpdatedAt = document.getElementById('viewUpdatedAt');
+        const viewStatusBadge = document.getElementById('viewStatusBadge');
+        
+        // Модальное окно для создания/редактирования идеи
+        const ideaFormModal = document.getElementById('ideaFormModal');
+        const closeFormModal = document.getElementById('closeFormModal');
+        const formIdeaTitle = document.getElementById('formIdeaTitle');
+        const formIdeaName = document.getElementById('formIdeaName');
+        const formIdeaDescription = document.getElementById('formIdeaDescription');
+        const formIdeaStatus = document.getElementById('formIdeaStatus');
+        const saveIdeaFormBtn = document.getElementById('saveIdeaFormBtn');
+        const cancelIdeaFormBtn = document.getElementById('cancelIdeaFormBtn');
+        
+        // Модальное окно для создания/редактирования механики
+        const mechanicFormModal = document.getElementById('mechanicFormModal');
+        const closeMechanicFormModal = document.getElementById('closeMechanicFormModal');
+        const formMechanicTitle = document.getElementById('formMechanicTitle');
+        const formMechanicName = document.getElementById('formMechanicName');
+        const formMechanicDescription = document.getElementById('formMechanicDescription');
+        const formMechanicStatus = document.getElementById('formMechanicStatus');
+        const saveMechanicFormBtn = document.getElementById('saveMechanicFormBtn');
+        const cancelMechanicFormBtn = document.getElementById('cancelMechanicFormBtn');
+        
+        // Модальное окно для импорта/экспорта
+        const importExportModal = document.getElementById('importExportModal');
+        const closeImportExportModal = document.getElementById('closeImportExportModal');
+        const closeImportExportBtn = document.getElementById('closeImportExportBtn');
+        const exportJSONBtn = document.getElementById('exportJSONBtn');
+        const copyToClipboardBtn = document.getElementById('copyToClipboardBtn');
+        const exportDataPreview = document.getElementById('exportDataPreview');
+        const exportIdeaCount = document.getElementById('exportIdeaCount');
+        const exportMechanicCount = document.getElementById('exportMechanicCount');
+        const exportDate = document.getElementById('exportDate');
+        const exportSize = document.getElementById('exportSize');
+        const importFileInput = document.getElementById('importFileInput');
+        const selectFileBtn = document.getElementById('selectFileBtn');
+        const selectedFileName = document.getElementById('selectedFileName');
+        const importDataInput = document.getElementById('importDataInput');
+        const importMergeBtn = document.getElementById('importMergeBtn');
+        const importReplaceBtn = document.getElementById('importReplaceBtn');
+        const clearImportBtn = document.getElementById('clearImportBtn');
+        const importExportTitle = document.getElementById('importExportTitle');
+        
+        // Модальное окно для резервного копирования
+        const backupModal = document.getElementById('backupModal');
+        const closeBackupModal = document.getElementById('closeBackupModal');
+        const closeBackupBtn = document.getElementById('closeBackupBtn');
+        const autoBackupDate = document.getElementById('autoBackupDate');
+        const autoBackupCount = document.getElementById('autoBackupCount');
+        const restoreAutoBackupBtn = document.getElementById('restoreAutoBackupBtn');
+        const createManualBackupBtn = document.getElementById('createManualBackupBtn');
+        const clearAllDataBtn = document.getElementById('clearAllDataBtn');
+        
+        // Инициализация при загрузке страницы
+        document.addEventListener('DOMContentLoaded', function() {
+            // Загружаем идеи из localStorage при загрузке
+            loadIdeasFromLocalStorage();
+            
+            // Загружаем автоматическую резервную копию
+            loadAutoBackup();
+            
+            // Обновляем отображение таймеров каждую секунду
+            setInterval(updateTimers, 1000);
+            
+            // Назначаем обработчики событий
+            addNewIdeaBtn.addEventListener('click', showAddIdeaModal);
+            exportBtn.addEventListener('click', showExportModal);
+            importBtn.addEventListener('click', showImportModal);
+            backupBtn.addEventListener('click', showBackupModal);
+            
+            // Обработчики для модальных окон
+            closeViewModal.addEventListener('click', closeViewModalFunc);
+            closeViewBtn.addEventListener('click', closeViewModalFunc);
+            addNewMechanicBtn.addEventListener('click', showAddMechanicModal);
+            editIdeaFromViewBtn.addEventListener('click', editCurrentIdea);
+            
+            closeFormModal.addEventListener('click', closeFormModalFunc);
+            cancelIdeaFormBtn.addEventListener('click', closeFormModalFunc);
+            saveIdeaFormBtn.addEventListener('click', saveIdeaForm);
+            
+            closeMechanicFormModal.addEventListener('click', closeMechanicFormModalFunc);
+            cancelMechanicFormBtn.addEventListener('click', closeMechanicFormModalFunc);
+            saveMechanicFormBtn.addEventListener('click', saveMechanicForm);
+            
+            // Импорт/экспорт обработчики
+            closeImportExportModal.addEventListener('click', closeImportExportModalFunc);
+            closeImportExportBtn.addEventListener('click', closeImportExportModalFunc);
+            exportJSONBtn.addEventListener('click', exportToJSON);
+            copyToClipboardBtn.addEventListener('click', copyToClipboard);
+            selectFileBtn.addEventListener('click', () => importFileInput.click());
+            importFileInput.addEventListener('change', handleFileSelect);
+            importMergeBtn.addEventListener('click', () => importData('merge'));
+            importReplaceBtn.addEventListener('click', () => importData('replace'));
+            clearImportBtn.addEventListener('click', clearImportData);
+            
+            // Резервное копирование обработчики
+            closeBackupModal.addEventListener('click', closeBackupModalFunc);
+            closeBackupBtn.addEventListener('click', closeBackupModalFunc);
+            restoreAutoBackupBtn.addEventListener('click', restoreAutoBackup);
+            createManualBackupBtn.addEventListener('click', createManualBackup);
+            clearAllDataBtn.addEventListener('click', clearAllData);
+            
+            // Закрытие модальных окон при клике вне их
+            window.addEventListener('click', function(event) {
+                if (event.target === ideaViewModal) closeViewModalFunc();
+                if (event.target === ideaFormModal) closeFormModalFunc();
+                if (event.target === mechanicFormModal) closeMechanicFormModalFunc();
+                if (event.target === importExportModal) closeImportExportModalFunc();
+                if (event.target === backupModal) closeBackupModalFunc();
+            });
+        });
+        
+        // Функция показа модального окна для добавления идеи
+        function showAddIdeaModal() {
+            currentEditIdeaId = null;
+            formIdeaTitle.textContent = 'Добавить новую идею';
+            formIdeaName.value = '';
+            formIdeaDescription.value = '';
+            formIdeaStatus.value = 'planning';
+            ideaFormModal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+        
+        // Функция показа модального окна для экспорта
+        function showExportModal() {
+            importExportTitle.textContent = 'Экспорт данных';
+            updateExportPreview();
+            importExportModal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+        
+        // Функция показа модального окна для импорта
+        function showImportModal() {
+            importExportTitle.textContent = 'Импорт данных';
+            importDataInput.value = '';
+            selectedFileName.textContent = 'Файл не выбран';
+            importExportModal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+        
+        // Функция показа модального окна для резервного копирования
+        function showBackupModal() {
+            updateBackupInfo();
+            backupModal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+        
+        // Функция сохранения идеи из формы
+        function saveIdeaForm() {
+            const name = formIdeaName.value.trim();
+            const description = formIdeaDescription.value.trim();
+            const status = formIdeaStatus.value;
+            
+            if (!name) {
+                showNotification('Пожалуйста, введите название идеи', 'error');
+                return;
+            }
+            
+            // Создаем объект идеи
+            const idea = {
+                id: currentEditIdeaId || Date.now(),
+                name: name,
+                description: description,
+                mechanics: currentEditIdeaId ? getIdeaMechanics(currentEditIdeaId) : [],
+                status: status,
+                createdAt: currentEditIdeaId ? getIdeaCreationTime(currentEditIdeaId) : new Date().toISOString(),
+                updatedAt: new Date().toISOString()
+            };
+            
+            // Если это редактирование, находим и заменяем идею
+            if (currentEditIdeaId) {
+                const index = ideas.findIndex(idea => idea.id === currentEditIdeaId);
+                if (index !== -1) {
+                    ideas[index] = idea;
+                }
+            } else {
+                // Иначе добавляем новую идею
+                ideas.push(idea);
+            }
+            
+            // Обновляем интерфейс
+            updateIdeasDisplay();
+            
+            // Автоматически сохраняем в localStorage
+            autoSaveToLocalStorage();
+            
+            // Создаем автоматическую резервную копию
+            createAutoBackup();
+            
+            // Закрываем модальное окно
+            closeFormModalFunc();
+            
+            // Показываем уведомление
+            showNotification(`Идея "${name}" успешно ${currentEditIdeaId ? 'обновлена' : 'сохранена'}!`, 'success');
+            
+            // Если мы редактировали идею, которая сейчас открыта в просмотре, обновляем ее
+            if (currentEditIdeaId && currentViewIdeaId === currentEditIdeaId) {
+                openIdeaViewModal(currentEditIdeaId);
+            }
+        }
+        
+        // Функция получения механик идеи (для редактирования)
+        function getIdeaMechanics(id) {
+            const existingIdea = ideas.find(idea => idea.id === id);
+            return existingIdea ? existingIdea.mechanics : [];
+        }
+        
+        // Функция получения времени создания идеи (для редактирования)
+        function getIdeaCreationTime(id) {
+            const existingIdea = ideas.find(idea => idea.id === id);
+            return existingIdea ? existingIdea.createdAt : new Date().toISOString();
+        }
+        
+        // Функция обновления отображения идей
+        function updateIdeasDisplay() {
+            ideasContainer.innerHTML = '';
+            ideasCount.textContent = `(${ideas.length})`;
+            
+            if (ideas.length === 0) {
+                emptyMessage.style.display = 'block';
+                ideasContainer.appendChild(emptyMessage);
+                return;
+            }
+            
+            emptyMessage.style.display = 'none';
+            
+            // Сортируем идеи по дате создания (сначала новые)
+            const sortedIdeas = [...ideas].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+            
+            sortedIdeas.forEach(idea => {
+                const ideaElement = document.createElement('div');
+                ideaElement.className = 'idea-card';
+                ideaElement.setAttribute('data-id', idea.id);
+                ideaElement.innerHTML = `
+                    <div class="idea-header">
+                        <div>
+                            <div class="idea-title">${idea.name}</div>
+                            <div class="idea-time">
+                                <i class="far fa-clock"></i>
+                                <span class="time-ago" data-created="${idea.createdAt}">${formatTimeAgo(idea.createdAt)}</span>
+                                • Создана: ${formatDate(idea.createdAt)}
+                            </div>
+                        </div>
+                        <span class="status-badge status-${idea.status}">${getStatusText(idea.status)}</span>
+                    </div>
+                    
+                    <div class="idea-description">${idea.description}</div>
+                    
+                    ${idea.mechanics.length > 0 ? `
+                    <div class="idea-mechanics-preview">
+                        <div class="mechanics-title">Механики: ${idea.mechanics.length}</div>
+                        <div class="mechanics-grid">
+                            ${idea.mechanics.slice(0, 4).map(mechanic => `
+                                <div class="mechanic-preview ${mechanic.status}">
+                                    <div style="width: 10px; height: 10px; border-radius: 50%; background-color: ${getMechanicStatusColor(mechanic.status)};"></div>
+                                    <div style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${mechanic.name}</div>
+                                </div>
+                            `).join('')}
+                            ${idea.mechanics.length > 4 ? `
+                                <div class="mechanic-preview" style="justify-content: center; color: #8b949e;">
+                                    +${idea.mechanics.length - 4} еще
+                                </div>
+                            ` : ''}
+                        </div>
+                    </div>
+                    ` : ''}
+                    
+                    <div class="idea-footer">
+                        <div>
+                            <span style="color: #8b949e; font-size: 0.9rem;">
+                                <i class="fas fa-history"></i> Обновлено: ${formatDate(idea.updatedAt)}
+                            </span>
+                        </div>
+                        <div class="idea-actions">
+                            <button class="btn btn-small btn-info" onclick="openIdeaViewModal(${idea.id}, event)">
+                                <i class="fas fa-cogs"></i> Механики
+                            </button>
+                            <button class="btn btn-small btn-warning" onclick="editIdea(${idea.id}, event)">
+                                <i class="fas fa-edit"></i> Редактировать
+                            </button>
+                            <button class="btn btn-small btn-danger" onclick="deleteIdea(${idea.id}, event)">
+                                <i class="fas fa-trash"></i> Удалить
+                            </button>
+                        </div>
+                    </div>
+                `;
+                ideasContainer.appendChild(ideaElement);
+                
+                // Добавляем обработчик клика на карточку
+                ideaElement.addEventListener('click', function(e) {
+                    // Проверяем, что клик не по кнопке
+                    if (!e.target.closest('button')) {
+                        openIdeaViewModal(idea.id);
+                    }
+                });
+            });
+        }
+        
+        // Функция получения текста статуса идеи
+        function getStatusText(status) {
+            const statusMap = {
+                planning: 'Планирование',
+                development: 'В разработке',
+                testing: 'Тестирование',
+                completed: 'Завершено'
+            };
+            return statusMap[status] || status;
+        }
+        
+        // Функция получения цвета статуса механики
+        function getMechanicStatusColor(status) {
+            const colorMap = {
+                'pending': '#f0883e',
+                'in-progress': '#58a6ff',
+                'ready': '#3fb950',
+                'rejected': '#f85149'
+            };
+            return colorMap[status] || '#8b949e';
+        }
+        
+        // Функция получения текста статуса механики
+        function getMechanicStatusText(status) {
+            const statusMap = {
+                'pending': 'В ожидании',
+                'in-progress': 'В разработке',
+                'ready': 'Готово',
+                'rejected': 'Отклонено'
+            };
+            return statusMap[status] || status;
+        }
+        
+        // Функция открытия модального окна просмотра идеи
+        function openIdeaViewModal(id, event = null) {
+            if (event) {
+                event.stopPropagation();
+            }
+            
+            const idea = ideas.find(idea => idea.id === id);
+            if (!idea) return;
+            
+            currentViewIdeaId = id;
+            
+            // Заполняем модальное окно данными
+            viewIdeaTitle.textContent = idea.name;
+            viewIdeaDescription.textContent = idea.description;
+            
+            // Обновляем информацию о времени и статусе
+            viewCreatedAt.textContent = formatDate(idea.createdAt);
+            viewUpdatedAt.textContent = formatDate(idea.updatedAt);
+            
+            viewStatusBadge.textContent = getStatusText(idea.status);
+            viewStatusBadge.className = `status-badge status-${idea.status}`;
+            
+            // Отображаем механики
+            updateViewMechanicsDisplay(idea.mechanics);
+            
+            // Показываем модальное окно
+            ideaViewModal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+        
+        // Функция обновления отображения механик в окне просмотра
+        function updateViewMechanicsDisplay(mechanics) {
+            viewMechanicsList.innerHTML = '';
+            
+            if (mechanics.length === 0) {
+                viewMechanicsList.innerHTML = `
+                    <div style="text-align: center; padding: 30px; color: #8b949e;">
+                        <i class="fas fa-cogs" style="font-size: 3rem; margin-bottom: 15px;"></i>
+                        <p>Механики еще не добавлены. Нажмите "Добавить механику", чтобы создать первую.</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            // Сортируем механики по статусу
+            const sortedMechanics = [...mechanics].sort((a, b) => {
+                const statusOrder = { 'in-progress': 0, 'pending': 1, 'ready': 2, 'rejected': 3 };
+                return (statusOrder[a.status] || 4) - (statusOrder[b.status] || 4);
+            });
+            
+            sortedMechanics.forEach((mechanic, index) => {
+                const mechanicElement = document.createElement('div');
+                mechanicElement.className = 'modal-mechanic-item';
+                mechanicElement.innerHTML = `
+                    <div class="modal-mechanic-header">
+                        <div class="modal-mechanic-name">
+                            ${mechanic.name}
+                            <span class="mechanic-status-badge mechanic-status-${mechanic.status}">
+                                <i class="fas ${getMechanicStatusIcon(mechanic.status)}"></i>
+                                ${getMechanicStatusText(mechanic.status)}
+                            </span>
+                        </div>
+                        <div class="modal-mechanic-actions">
+                            <button class="btn btn-small btn-warning" onclick="editMechanic(${index}, event)">
+                                <i class="fas fa-edit"></i> Изменить
+                            </button>
+                            <button class="btn btn-small btn-danger" onclick="deleteMechanic(${index}, event)">
+                                <i class="fas fa-trash"></i> Удалить
+                            </button>
+                        </div>
+                    </div>
+                    <div class="modal-mechanic-description">${mechanic.description}</div>
+                `;
+                viewMechanicsList.appendChild(mechanicElement);
+            });
+        }
+        
+        // Функция получения иконки для статуса механики
+        function getMechanicStatusIcon(status) {
+            const iconMap = {
+                'pending': 'fa-clock',
+                'in-progress': 'fa-spinner fa-spin',
+                'ready': 'fa-check-circle',
+                'rejected': 'fa-times-circle'
+            };
+            return iconMap[status] || 'fa-question-circle';
+        }
+        
+        // Функция закрытия модального окна просмотра
+        function closeViewModalFunc() {
+            ideaViewModal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+            currentViewIdeaId = null;
+        }
+        
+        // Функция редактирования текущей идеи (из окна просмотра)
+        function editCurrentIdea() {
+            if (!currentViewIdeaId) return;
+            
+            // Редактируем идею
+            editIdea(currentViewIdeaId);
+        }
+        
+        // Функция редактирования идеи
+        function editIdea(id, event = null) {
+            if (event) {
+                event.stopPropagation();
+            }
+            
+            const idea = ideas.find(idea => idea.id === id);
+            if (!idea) return;
+            
+            currentEditIdeaId = idea.id;
+            
+            // Заполняем форму данными идеи
+            formIdeaTitle.textContent = 'Редактировать идею';
+            formIdeaName.value = idea.name;
+            formIdeaDescription.value = idea.description;
+            formIdeaStatus.value = idea.status;
+            
+            // Показываем модальное окно формы
+            ideaFormModal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+            
+            // Закрываем окно просмотра, если оно открыто
+            if (currentViewIdeaId === id) {
+                closeViewModalFunc();
+            }
+        }
+        
+        // Функция закрытия модального окна формы идеи
+        function closeFormModalFunc() {
+            ideaFormModal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+            currentEditIdeaId = null;
+        }
+        
+        // Функция удаления идеи
+        function deleteIdea(id, event = null) {
+            if (event) {
+                event.stopPropagation();
+            }
+            
+            if (confirm('Вы уверены, что хотите удалить эту идею? Все связанные механики также будут удалены.')) {
+                ideas = ideas.filter(idea => idea.id !== id);
+                updateIdeasDisplay();
+                autoSaveToLocalStorage();
+                createAutoBackup();
+                
+                // Закрываем окно просмотра, если оно открыто для этой идеи
+                if (currentViewIdeaId === id) {
+                    closeViewModalFunc();
+                }
+                
+                showNotification('Идея успешно удалена', 'success');
+            }
+        }
+        
+        // Функция показа модального окна для добавления механики
+        function showAddMechanicModal() {
+            if (!currentViewIdeaId) return;
+            
+            currentEditMechanicIndex = null;
+            formMechanicTitle.textContent = 'Добавить механику';
+            formMechanicName.value = '';
+            formMechanicDescription.value = '';
+            formMechanicStatus.value = 'pending';
+            mechanicFormModal.style.display = 'flex';
+        }
+        
+        // Функция редактирования механики
+        function editMechanic(index, event) {
+            if (event) {
+                event.stopPropagation();
+            }
+            
+            if (!currentViewIdeaId) return;
+            
+            const idea = ideas.find(idea => idea.id === currentViewIdeaId);
+            if (!idea || !idea.mechanics[index]) return;
+            
+            currentEditMechanicIndex = index;
+            formMechanicTitle.textContent = 'Редактировать механику';
+            formMechanicName.value = idea.mechanics[index].name;
+            formMechanicDescription.value = idea.mechanics[index].description;
+            formMechanicStatus.value = idea.mechanics[index].status;
+            mechanicFormModal.style.display = 'flex';
+        }
+        
+        // Функция удаления механики
+        function deleteMechanic(index, event) {
+            if (event) {
+                event.stopPropagation();
+            }
+            
+            if (!currentViewIdeaId) return;
+            
+            if (confirm('Вы уверены, что хотите удалить эту механику?')) {
+                const ideaIndex = ideas.findIndex(idea => idea.id === currentViewIdeaId);
+                if (ideaIndex !== -1) {
+                    ideas[ideaIndex].mechanics.splice(index, 1);
+                    ideas[ideaIndex].updatedAt = new Date().toISOString();
+                    
+                    // Обновляем отображение
+                    updateViewMechanicsDisplay(ideas[ideaIndex].mechanics);
+                    updateIdeasDisplay();
+                    autoSaveToLocalStorage();
+                    createAutoBackup();
+                    
+                    showNotification('Механика успешно удалена', 'success');
+                }
+            }
+        }
+        
+        // Функция сохранения механики из формы
+        function saveMechanicForm() {
+            const name = formMechanicName.value.trim();
+            const description = formMechanicDescription.value.trim();
+            const status = formMechanicStatus.value;
+            
+            if (!name) {
+                showNotification('Пожалуйста, введите название механики', 'error');
+                return;
+            }
+            
+            if (!currentViewIdeaId) return;
+            
+            const ideaIndex = ideas.findIndex(idea => idea.id === currentViewIdeaId);
+            if (ideaIndex === -1) return;
+            
+            const mechanic = {
+                id: Date.now(),
+                name: name,
+                description: description,
+                status: status,
+                createdAt: currentEditMechanicIndex !== null ? 
+                    ideas[ideaIndex].mechanics[currentEditMechanicIndex].createdAt : 
+                    new Date().toISOString(),
+                updatedAt: new Date().toISOString()
+            };
+            
+            if (currentEditMechanicIndex !== null) {
+                // Редактирование существующей механики
+                ideas[ideaIndex].mechanics[currentEditMechanicIndex] = mechanic;
+            } else {
+                // Добавление новой механики
+                ideas[ideaIndex].mechanics.push(mechanic);
+            }
+            
+            ideas[ideaIndex].updatedAt = new Date().toISOString();
+            
+            // Обновляем отображение
+            updateViewMechanicsDisplay(ideas[ideaIndex].mechanics);
+            updateIdeasDisplay();
+            autoSaveToLocalStorage();
+            createAutoBackup();
+            
+            // Закрываем модальное окно
+            closeMechanicFormModalFunc();
+            
+            // Показываем уведомление
+            showNotification(`Механика "${name}" успешно ${currentEditMechanicIndex !== null ? 'обновлена' : 'добавлена'}!`, 'success');
+        }
+        
+        // Функция закрытия модального окна формы механики
+        function closeMechanicFormModalFunc() {
+            mechanicFormModal.style.display = 'none';
+            currentEditMechanicIndex = null;
+        }
+        
+        // Функция закрытия модального окна импорта/экспорта
+        function closeImportExportModalFunc() {
+            importExportModal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+        
+        // Функция закрытия модального окна резервного копирования
+        function closeBackupModalFunc() {
+            backupModal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+        
+        // Функция обновления превью экспорта
+        function updateExportPreview() {
+            // Подсчитываем общее количество механик
+            let totalMechanics = 0;
+            ideas.forEach(idea => {
+                totalMechanics += idea.mechanics.length;
+            });
+            
+            const data = {
+                ideas: ideas,
+                exportedAt: new Date().toISOString(),
+                version: '1.0',
+                stats: {
+                    totalIdeas: ideas.length,
+                    totalMechanics: totalMechanics
+                }
+            };
+            
+            const jsonString = JSON.stringify(data, null, 2);
+            exportDataPreview.value = jsonString;
+            
+            // Обновляем информацию
+            exportIdeaCount.textContent = ideas.length;
+            exportMechanicCount.textContent = totalMechanics;
+            exportDate.textContent = new Date().toLocaleString();
+            exportSize.textContent = formatFileSize(new Blob([jsonString]).size);
+        }
+        
+        // Функция форматирования размера файла
+        function formatFileSize(bytes) {
+            if (bytes === 0) return '0 Б';
+            const k = 1024;
+            const sizes = ['Б', 'КБ', 'МБ', 'ГБ'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(1)) + ' ' + sizes[i];
+        }
+        
+        // Функция экспорта в JSON
+        function exportToJSON() {
+            const data = {
+                ideas: ideas,
+                exportedAt: new Date().toISOString(),
+                version: '1.0'
+            };
+            
+            const jsonString = JSON.stringify(data, null, 2);
+            const blob = new Blob([jsonString], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `gamedev-notebook-backup-${new Date().toISOString().slice(0, 10)}.json`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            
+            showNotification(`Данные успешно экспортированы (${ideas.length} идей)`, 'success');
+        }
+        
+        // Функция копирования в буфер обмена
+        function copyToClipboard() {
+            exportDataPreview.select();
+            exportDataPreview.setSelectionRange(0, 99999);
+            navigator.clipboard.writeText(exportDataPreview.value)
+                .then(() => {
+                    showNotification('Данные скопированы в буфер обмена', 'success');
+                })
+                .catch(err => {
+                    showNotification('Ошибка копирования в буфер обмена', 'error');
+                });
+        }
+        
+        // Функция обработки выбора файла
+        function handleFileSelect(event) {
+            const file = event.target.files[0];
+            if (file) {
+                selectedFileName.textContent = file.name;
+                
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    importDataInput.value = e.target.result;
+                };
+                reader.readAsText(file);
+            }
+        }
+        
+        // Функция импорта данных
+        function importData(mode = 'merge') {
+            let jsonData;
+            
+            // Пробуем получить данные из текстового поля
+            if (importDataInput.value.trim()) {
+                try {
+                    jsonData = JSON.parse(importDataInput.value);
+                } catch (error) {
+                    showNotification('Ошибка парсинга JSON из текстового поля', 'error');
+                    return;
+                }
+            } 
+            // Пробуем получить данные из файла
+            else if (importFileInput.files.length > 0) {
+                const file = importFileInput.files[0];
+                const reader = new FileReader();
+                
+                reader.onload = function(e) {
+                    try {
+                        jsonData = JSON.parse(e.target.result);
+                        processImportData(jsonData, mode);
+                    } catch (error) {
+                        showNotification('Ошибка парсинга JSON из файла', 'error');
+                    }
+                };
+                
+                reader.readAsText(file);
+                return;
+            } else {
+                showNotification('Нет данных для импорта', 'error');
+                return;
+            }
+            
+            processImportData(jsonData, mode);
+        }
+        
+        // Функция обработки импортированных данных
+        function processImportData(jsonData, mode) {
+            if (!jsonData.ideas || !Array.isArray(jsonData.ideas)) {
+                showNotification('Неверный формат данных. Ожидается массив "ideas"', 'error');
+                return;
+            }
+            
+            if (mode === 'replace') {
+                // Заменяем все данные
+                ideas = jsonData.ideas;
+                showNotification(`Все данные заменены. Импортировано ${ideas.length} идей`, 'success');
+            } else {
+                // Объединяем данные
+                const originalCount = ideas.length;
+                const importedIdeas = jsonData.ideas;
+                
+                // Объединяем идеи, избегая дубликатов по ID
+                importedIdeas.forEach(importedIdea => {
+                    // Проверяем, существует ли уже идея с таким ID
+                    const existingIndex = ideas.findIndex(idea => idea.id === importedIdea.id);
+                    
+                    if (existingIndex === -1) {
+                        // Добавляем новую идею
+                        ideas.push(importedIdea);
+                    } else {
+                        // Обновляем существующую идею (заменяем)
+                        ideas[existingIndex] = importedIdea;
+                    }
+                });
+                
+                const newCount = ideas.length;
+                const addedCount = newCount - originalCount;
+                const updatedCount = importedIdeas.length - addedCount;
+                
+                showNotification(
+                    `Данные объединены. Добавлено: ${addedCount} новых идей, обновлено: ${updatedCount} существующих. Всего идей: ${newCount}`,
+                    'success'
+                );
+            }
+            
+            // Обновляем интерфейс
+            updateIdeasDisplay();
+            autoSaveToLocalStorage();
+            createAutoBackup();
+            closeImportExportModalFunc();
+        }
+        
+        // Функция очистки данных импорта
+        function clearImportData() {
+            importDataInput.value = '';
+            importFileInput.value = '';
+            selectedFileName.textContent = 'Файл не выбран';
+        }
+        
+        // Функция обновления информации о резервном копировании
+        function updateBackupInfo() {
+            if (autoBackupData) {
+                autoBackupDate.textContent = new Date(autoBackupData.exportedAt).toLocaleString();
+                autoBackupCount.textContent = autoBackupData.ideas ? autoBackupData.ideas.length : 0;
+            } else {
+                autoBackupDate.textContent = 'нет данных';
+                autoBackupCount.textContent = '0';
+            }
+        }
+        
+        // Функция загрузки автоматической резервной копии
+        function loadAutoBackup() {
+            try {
+                const savedBackup = localStorage.getItem('gameDevNotebookAutoBackup');
+                if (savedBackup) {
+                    autoBackupData = JSON.parse(savedBackup);
+                }
+            } catch (error) {
+                console.error('Ошибка при загрузке автоматической резервной копии:', error);
+            }
+        }
+        
+        // Функция создания автоматической резервной копии
+        function createAutoBackup() {
+            try {
+                const backupData = {
+                    ideas: ideas,
+                    exportedAt: new Date().toISOString(),
+                    version: '1.0'
+                };
+                
+                localStorage.setItem('gameDevNotebookAutoBackup', JSON.stringify(backupData));
+                autoBackupData = backupData;
+            } catch (error) {
+                console.error('Ошибка при создании автоматической резервной копии:', error);
+            }
+        }
+        
+        // Функция восстановления из автоматической резервной копии
+        function restoreAutoBackup() {
+            if (!autoBackupData || !autoBackupData.ideas) {
+                showNotification('Автоматическая резервная копия не найдена', 'error');
+                return;
+            }
+            
+            if (confirm(`Восстановить данные из резервной копии от ${new Date(autoBackupData.exportedAt).toLocaleString()}? Текущие данные будут заменены.`)) {
+                ideas = autoBackupData.ideas;
+                updateIdeasDisplay();
+                autoSaveToLocalStorage();
+                showNotification(`Данные восстановлены из резервной копии (${ideas.length} идей)`, 'success');
+                closeBackupModalFunc();
+            }
+        }
+        
+        // Функция создания ручной резервной копии
+        function createManualBackup() {
+            exportToJSON(); // Используем ту же функцию, что и для экспорта
+        }
+        
+        // Функция очистки всех данных
+        function clearAllData() {
+            if (confirm('ВНИМАНИЕ! Вы уверены, что хотите удалить ВСЕ данные? Это действие нельзя отменить. Рекомендуется сначала сделать резервную копию.')) {
+                ideas = [];
+                updateIdeasDisplay();
+                autoSaveToLocalStorage();
+                createAutoBackup();
+                showNotification('Все данные удалены', 'success');
+                closeBackupModalFunc();
+            }
+        }
+        
+        // Функция автосохранения в localStorage
+        function autoSaveToLocalStorage() {
+            try {
+                localStorage.setItem('gameDevNotebookIdeas', JSON.stringify(ideas));
+            } catch (error) {
+                console.error('Ошибка при сохранении в localStorage:', error);
+                showNotification('Ошибка при сохранении данных', 'error');
+            }
+        }
+        
+        // Функция загрузки из localStorage
+        function loadIdeasFromLocalStorage() {
+            try {
+                const savedIdeas = localStorage.getItem('gameDevNotebookIdeas');
+                if (savedIdeas) {
+                    ideas = JSON.parse(savedIdeas);
+                    updateIdeasDisplay();
+                }
+            } catch (error) {
+                console.error('Ошибка при загрузке из localStorage:', error);
+            }
+        }
+        
+        // Функция форматирования даты
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleDateString('ru-RU', {
+                day: '2-digit',
+                month: '2-digit',
+                year: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+        }
+        
+        // Функция форматирования времени "сколько прошло"
+        function formatTimeAgo(dateString) {
+            const date = new Date(dateString);
+            const now = new Date();
+            const diffInSeconds = Math.floor((now - date) / 1000);
+            
+            if (diffInSeconds < 60) {
+                return 'только что';
+            } else if (diffInSeconds < 3600) {
+                const minutes = Math.floor(diffInSeconds / 60);
+                return `${minutes} ${getRussianNoun(minutes, 'минуту', 'минуты', 'минут')} назад`;
+            } else if (diffInSeconds < 86400) {
+                const hours = Math.floor(diffInSeconds / 3600);
+                return `${hours} ${getRussianNoun(hours, 'час', 'часа', 'часов')} назад`;
+            } else if (diffInSeconds < 2592000) {
+                const days = Math.floor(diffInSeconds / 86400);
+                return `${days} ${getRussianNoun(days, 'день', 'дня', 'дней')} назад`;
+            } else if (diffInSeconds < 31536000) {
+                const months = Math.floor(diffInSeconds / 2592000);
+                return `${months} ${getRussianNoun(months, 'месяц', 'месяца', 'месяцев')} назад`;
+            } else {
+                const years = Math.floor(diffInSeconds / 31536000);
+                return `${years} ${getRussianNoun(years, 'год', 'года', 'лет')} назад`;
+            }
+        }
+        
+        // Функция для правильного склонения русских существительных
+        function getRussianNoun(number, one, two, five) {
+            let n = Math.abs(number);
+            n %= 100;
+            if (n >= 5 && n <= 20) {
+                return five;
+            }
+            n %= 10;
+            if (n === 1) {
+                return one;
+            }
+            if (n >= 2 && n <= 4) {
+                return two;
+            }
+            return five;
+        }
+        
+        // Функция обновления таймеров
+        function updateTimers() {
+            const timeAgoElements = document.querySelectorAll('.time-ago');
+            timeAgoElements.forEach(element => {
+                const createdAt = element.getAttribute('data-created');
+                element.textContent = formatTimeAgo(createdAt);
+            });
+        }
+        
+        // Функция показа уведомления
+        function showNotification(message, type = 'info') {
+            // Создаем элемент уведомления
+            const notification = document.createElement('div');
+            
+            // Определяем цвет в зависимости от типа
+            let backgroundColor = '#238636'; // success - зеленый
+            let icon = 'fas fa-check-circle';
+            
+            if (type === 'error') {
+                backgroundColor = '#da3633'; // error - красный
+                icon = 'fas fa-exclamation-circle';
+            } else if (type === 'info') {
+                backgroundColor = '#30363d'; // info - серый
+                icon = 'fas fa-info-circle';
+            } else if (type === 'warning') {
+                backgroundColor = '#9e6a03'; // warning - оранжевый
+                icon = 'fas fa-exclamation-triangle';
+            }
+            
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background-color: ${backgroundColor};
+                color: white;
+                padding: 15px 20px;
+                border-radius: 6px;
+                z-index: 1001;
+                font-weight: 600;
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+                animation: slideIn 0.3s ease-out;
+                max-width: 350px;
+                word-wrap: break-word;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            `;
+            
+            // Добавляем CSS для анимации
+            if (!document.querySelector('#notificationStyles')) {
+                const style = document.createElement('style');
+                style.id = 'notificationStyles';
+                style.textContent = `
+                    @keyframes slideIn {
+                        from { transform: translateX(100%); opacity: 0; }
+                        to { transform: translateX(0); opacity: 1; }
+                    }
+                    @keyframes slideOut {
+                        from { transform: translateX(0); opacity: 1; }
+                        to { transform: translateX(100%); opacity: 0; }
+                    }
+                `;
+                document.head.appendChild(style);
+            }
+            
+            notification.innerHTML = `<i class="${icon}"></i> <span>${message}</span>`;
+            document.body.appendChild(notification);
+            
+            // Удаляем уведомление через 3 секунды
+            setTimeout(() => {
+                notification.style.animation = 'slideOut 0.3s ease-out forwards';
+                
+                setTimeout(() => {
+                    if (notification.parentNode) {
+                        document.body.removeChild(notification);
+                    }
+                }, 300);
+            }, 3000);
+        }
+    </script>
 </body>
 </html>
